@@ -1,0 +1,1 @@
+# Integrate Go Project with SonarQube
