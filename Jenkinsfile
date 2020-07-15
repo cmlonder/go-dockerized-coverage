@@ -6,16 +6,18 @@ pipeline {
 
         stage('Test') {
             steps {
-                workSpace = env.WORKSPACE
-                def imageName = "localtest" + new Random().nextInt()
-                def containerName = "coverage" + new Random().nextInt()
-                try {
-                   sh "docker build -t $imageName ."
-                   sh "docker run -dt --rm --name $containerName $imageName"
-                   sh "docker cp $containerName:/src/coverage.out ."
-                 } finally {
-                   sh "docker stop $containerName"
-                 }
+                script {
+                    workSpace = env.WORKSPACE
+                    def imageName = "localtest" + new Random().nextInt()
+                    def containerName = "coverage" + new Random().nextInt()
+                    try {
+                       sh "docker build -t $imageName ."
+                       sh "docker run -dt --rm --name $containerName $imageName"
+                       sh "docker cp $containerName:/src/coverage.out ."
+                     } finally {
+                       sh "docker stop $containerName"
+                     }
+                }
              }
         }
 
@@ -33,11 +35,13 @@ pipeline {
 
         stage("Quality Gate Check"){
             steps {
-                timeout(time: 4, unit: 'MINUTES') {
-                    sleep(10)
-                    def qg = waitForQualityGate()
-                    if (qg.status != 'OK') {
-                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                script {
+                    timeout(time: 4, unit: 'MINUTES') {
+                        sleep(10)
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
                     }
                 }
             }
