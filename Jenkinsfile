@@ -4,10 +4,9 @@ pipeline {
 
     stages {
 
-        workSpace = env.WORKSPACE
-        def imageName = "localtest" + new Random().nextInt()
-
         stage('Test') {
+            workSpace = env.WORKSPACE
+            def imageName = "localtest" + new Random().nextInt()
             def containerName = "coverage" + new Random().nextInt()
             try {
                sh "docker build -t $imageName ."
