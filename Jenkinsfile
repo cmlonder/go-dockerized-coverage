@@ -24,10 +24,12 @@ pipeline {
         stage("SonarQube analysis") {
             steps {
                 withSonarQubeEnv('DEV-SonarQube_PLA_Project_9292') {
-                    try {
-                        sh "docker run --user=\$(id -u):\$(id -g) --rm -e SONAR_HOST_URL=http://sonar:9292 -v $workSpace:/usr/src sonarsource/sonar-scanner-cli"
-                    } finally {
-                        sh "docker image rm $imageName"
+                    script {
+                        try {
+                            sh "docker run --user=\$(id -u):\$(id -g) --rm -e SONAR_HOST_URL=http://sonar:9292 -v $workSpace:/usr/src sonarsource/sonar-scanner-cli"
+                        } finally {
+                            sh "docker image rm $imageName"
+                        }
                     }
                 }
             }
