@@ -1,6 +1,6 @@
 # Integrate Go Project with SonarQube
 
-Read detailed description in [this blog post](http://cemalonder.com/post/golang-dockerized-sonar-integration-chapter-1/)
+Read detailed description in [this blog post](http://cemalonder.com/post/go-sonar-integration-using-docker-part-1/)
 
 Run tests
 ```
