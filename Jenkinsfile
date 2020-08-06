@@ -1,3 +1,4 @@
+def imageName
 pipeline {
     agent any
 
@@ -5,7 +6,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    def imageName = "localtest" + new Random().nextInt()
+                    imageName = "localtest" + new Random().nextInt()
                     def containerName = "coverage" + new Random().nextInt()
                     try {
                        sh "docker build -t $imageName ."
@@ -22,7 +23,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh "docker run --user=\$(id -u):\$(id -g) --rm -e SONAR_HOST_URL=http://f591d5279d19.ngrok.io -v ${WORKSPACE}:/usr/src sonarsource/sonar-scanner-cli"
+                        sh "docker run -u root --rm -e SONAR_HOST_URL=http://f591d5279d19.ngrok.io -v ${WORKSPACE}:/usr/src sonarsource/sonar-scanner-cli"
                     } finally {
                         sh "docker image rm $imageName"
                     }
