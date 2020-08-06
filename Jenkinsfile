@@ -25,7 +25,7 @@ pipeline {
                 withSonarQubeEnv('DEV-SonarQube_PLA_Project_9292') {
                     script {
                         try {
-                            sh "docker run --user=\$(id -u):\$(id -g) --rm -e SONAR_HOST_URL=http://sonar:9292 -v $workSpace:/usr/src sonarsource/sonar-scanner-cli"
+                            sh "docker run --user=\$(id -u):\$(id -g) --rm -e SONAR_HOST_URL=http://f591d5279d19.ngrok.io -v $workSpace:/usr/src sonarsource/sonar-scanner-cli"
                         } finally {
                             sh "docker image rm $imageName"
                         }
