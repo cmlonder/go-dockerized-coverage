@@ -3,15 +3,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Initialize'){
-            steps {
-                script {
-                    def dockerHome = tool 'localDocker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-            }
-        }
-
         stage('Test') {
             steps {
                 script {
